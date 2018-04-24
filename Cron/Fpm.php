@@ -3,13 +3,12 @@
 # 
 
 namespace Onderwater\TransactionMining\Cron;
-use \Psr\Log\LoggerInterface;
+use Phpml\Association\Apriori;
+use Phpml\ModelManager;
 
 class Fpm {
-    protected $logger;
 
-    public function __construct(LoggerInterface $logger) {
-        $this->logger = $logger;
+    public function __construct() {
     }
 
 /**
@@ -19,7 +18,12 @@ class Fpm {
    */
 
     public function execute() {
-        $this->logger->info('Cron Works');
+        $sample = [];
+
+        $apriori = new Apriori(0, 0);
+        $apriori->train($sample, []);
+
+        $L = $apriori->apriori();
     }
 
 }
