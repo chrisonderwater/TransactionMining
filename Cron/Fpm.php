@@ -8,7 +8,13 @@ use Phpml\ModelManager;
 
 class Fpm {
 
-    public function __construct() {
+    /**
+     * @var |Onderwater|TransactionMining|Model|Transactions
+     */
+    protected $_transactions;
+
+    public function __construct(\Onderwater\TransactionMining\Model\Transactions $transactions) {
+        $this->_transactions = $transactions;
     }
 
 /**
@@ -19,6 +25,8 @@ class Fpm {
 
     public function execute() {
         $sample = [];
+
+        print_r($this->_transactions->getOrders(1));
 
         $apriori = new Apriori(0, 0);
         $apriori->train($sample, []);
