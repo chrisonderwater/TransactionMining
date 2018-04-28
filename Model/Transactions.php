@@ -16,14 +16,15 @@ class Transactions extends AbstractModel
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
     protected $_orderModel;
+    protected $orderRepository;
 
     /**
      * @return void
      */
-    public function __construct(\Magento\Sales\Model\Order $orderModel)
+    public function __construct(\Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderRepository)
     {
 //        $this->_init();
-        $this->_orderModel = $orderModel;
+        $this->orderRepository = $orderRepository;
     }
 
     public function loadData(){
@@ -33,23 +34,18 @@ class Transactions extends AbstractModel
     }
 
     public function getOrders($store){
-        $orders = $this->_orderModel->getCollection();
-        $orders->join(array('item' => 'sales_order_item'), 'main_table.entity_id = item.order_id AND main_table.store_id='.$store.' ');
-        $orders->getSelect()->group('main_table.entity_id');
-        $orders->getSelect()->order('main_table.created_at DESC');
-        //$this->_logger->info($orders); //find your query in system.log
-        $order_array = array();
-        foreach($orders as $k=>$order) {
-            $order_array[$k] = array(
-                'order_id' => $order->getId(),
-                'order_incremental_id' => $order->getIncrementId(),
-                'order_status' => $order->getStatusLabel(),
-                'order_date' => $order->getCreatedAt(),
-                'customer_name' => $order->getCustomerName()
-                //as your need
-            );
+        $collection = $this->orderRepository->create()->addAttributeToSelect('*');
+        $transactionList = [];
+        foreach ($collection as $order){
+            $transaction = [];
+            foreach($order->getAllItems() as $item){
+                array_push($transaction, $item->getId());
+            }
+            array_push($transactionList, $transaction);
         }
-        return json_encode($order_array);
+        return $transactionList ;
+        // You Can filter collection as
+        //$this->orderCollectionFactory->addFieldToFilter($field, $condition);
     }
     
 }
