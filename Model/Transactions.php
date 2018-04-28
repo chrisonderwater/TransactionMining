@@ -33,7 +33,7 @@ class Transactions extends AbstractModel
 
     }
 
-    public function getOrders($store){
+    public function getTransactions(){
         $collection = $this->orderRepository->create()->addAttributeToSelect('*');
         $transactionList = [];
         foreach ($collection as $order){

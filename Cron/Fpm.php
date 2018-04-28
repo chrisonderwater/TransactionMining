@@ -24,14 +24,19 @@ class Fpm {
    */
 
     public function execute() {
-        $sample = [];
-
-        print_r($this->_transactions->getOrders(1));
+        $transactions = $this->_transactions->getTransactions();
 
         $apriori = new Apriori(0, 0);
-        $apriori->train($sample, []);
+        $apriori->train($transactions, []);
+        $rules = $apriori->getRules();
+        return $rules;
 
-        $L = $apriori->apriori();
+        // Sample for iterating through items.
+        //$L = $apriori->apriori();
+        //foreach($L as $items){
+        //    print_r($apriori->predict($items));
+        //}
+        //var_dump($L);
     }
 
 }
