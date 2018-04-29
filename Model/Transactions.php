@@ -39,7 +39,7 @@ class Transactions extends AbstractModel
         foreach ($collection as $order){
             $transaction = [];
             foreach($order->getAllItems() as $item){
-                array_push($transaction, $item->getId());
+                array_push($transaction, $item->getSku());
             }
             array_push($transactionList, $transaction);
         }
