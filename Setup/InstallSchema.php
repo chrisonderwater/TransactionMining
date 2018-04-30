@@ -13,7 +13,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 $installer->getTable('onderwater_transactionmining_rules')
             )
                 ->addColumn(
-                    'product_id',
+                    'id',
                     \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
                     null,
                     [
@@ -25,25 +25,18 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                     'Product ID'
                 )
                 ->addColumn(
-                    'product_name',
+                    'antecedent',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     255,
                     ['nullable => false'],
-                    'Product Name'
+                    'Product Skus Antecedent'
                 )
                 ->addColumn(
-                    'product_image',
+                    'consequent',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                     255,
-                    [],
-                    'Image of product'
-                )
-                ->addColumn(
-                    'sku',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    255,
-                    [],
-                    'Product SKU'
+                    ['nullable => false'],
+                    'Product Skus Consequent'
                 )
                 ->addColumn(
                     'confidence',
