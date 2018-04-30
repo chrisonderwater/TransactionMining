@@ -26,7 +26,7 @@ class Fpm {
     public function execute() {
         $transactions = $this->_transactions->getTransactions();
 
-        $apriori = new Apriori(0, 0);
+        $apriori = new Apriori(0, 0.5);
         $apriori->train($transactions, []);
         $rules = $apriori->getRules();
         return $rules;
